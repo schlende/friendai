@@ -111,7 +111,7 @@ The Postgres database is structured around three main tables to manage users, fr
 ### 4.2. Friends Table
 
 - **id:** Primary key, sequential.
-- **user_id:** Foreign key linking to the Users table.
+- **user_id:** Foreign key linking to the Users table. Make this a reference type to users with onDelete cascade.
 - **birthday:** Datetime field.
 - **interests:** Free-form text describing the friend's interests.
 - **lastrecommended:** Datetime marking the last time a recommendation was generated for this friend.
@@ -120,8 +120,9 @@ The Postgres database is structured around three main tables to manage users, fr
 ### 4.3. DailyRecommended Table
 
 - **id:** Primary key, sequential.
-- **user_id:** Foreign key indicating who the recommendation belongs to.
+- **user_id:** Foreign key indicating who the recommendation belongs to. Make this a reference type to users with onDelete cascade.
 - **friend_id:** Foreign key linking to the corresponding friend.
+Make this a reference type to friends with onDelete cascade.
 - **reason:** Enum indicating the type of recommendation (e.g., `longtimenosee`, `firstcontact`, `strengthenties`).
 - **datetime:** Datetime of when the recommendation was generated.
 - **actiondate:** Datetime of when the recommended action was taken.
@@ -174,7 +175,9 @@ friendaiserver/
     ├── app.html
     ├── app.css
     ├── lib/
-    │   ├── db.ts              // Database connection / ORM file
+    |   ├── server/
+    |   |   ├── db/
+    │   |   |    ├── index.ts              // Database connection / ORM file
     │   └── worker.ts          // (Optional) Graphile Worker setup
     └── routes/
         ├── +layout.svelte     // Global layout (header, footer, etc.)
