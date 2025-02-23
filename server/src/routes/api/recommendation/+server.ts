@@ -22,16 +22,16 @@ export const GET: RequestHandler = async ({ cookies }) => {
     const twoDaysAgo = new Date();
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 
-    const recommendations = await db
-      .select()
-      .from(dailyRecommended)
-      .where(
-        and(
-          eq(dailyRecommended.userId, user.id),
-          gte(dailyRecommended.datetime, twoDaysAgo)
-        )
-      )
-      .orderBy(dailyRecommended.datetime);
+    const recommendations = await db.instance.query.dailyRecommended.findMany({
+      where: and(
+        eq(dailyRecommended.userId, user.id),
+        gte(dailyRecommended.datetime, twoDaysAgo)
+      ),
+      orderBy: dailyRecommended.datetime,
+      with: {
+        friend: true
+      }
+    });
 
     return json({ 
       recommendations,

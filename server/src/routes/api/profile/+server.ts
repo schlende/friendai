@@ -27,7 +27,7 @@ export const PUT: RequestHandler = async ({ request, cookies }) => {
     const body = await request.json();
     const validatedData = profileSchema.parse(body);
 
-    const updatedUser = await db.update(users)
+    const updatedUser = await db.instance.update(users)
       .set(validatedData)
       .where(eq(users.id, user.id))
       .returning();

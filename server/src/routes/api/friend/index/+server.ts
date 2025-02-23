@@ -23,7 +23,7 @@ export const GET: RequestHandler = async ({ cookies }) => {
   }
 
   try {
-    const friendsList = await db.select().from(friends).where(
+    const friendsList = await db.instance.select().from(friends).where(
       eq(friends.userId, user.id)
     );
 
@@ -45,7 +45,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     const body = await request.json();
     const validatedData = friendSchema.parse(body);
 
-    const newFriend = await db.insert(friends).values({
+    const newFriend = await db.instance.insert(friends).values({
       name: validatedData.name,
       userId: user.id,
       howwemet: validatedData.howwemet,

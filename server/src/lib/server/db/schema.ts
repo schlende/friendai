@@ -1,7 +1,8 @@
-import { 
-  pgTable, 
-  uuid, 
-  varchar, 
+import { relations } from 'drizzle-orm';
+import {
+  pgTable,
+  uuid,
+  varchar,
   text,
   timestamp,
   integer,
@@ -69,6 +70,18 @@ export const dailyRecommended = pgTable('daily_recommended', {
   status: recommendationStatusEnum('status').default('new').notNull(),
   recommendations: json('recommendations').notNull() // Array of recommended ideas with duration classifications
 });
+
+// Then define the relations
+export const friendsRelations = relations(friends, ({ many }) => ({
+  recommendations: many(dailyRecommended)
+}));
+
+export const dailyRecommendationsRelations = relations(dailyRecommended, ({ one }) => ({
+  friend: one(friends, {
+    fields: [dailyRecommended.friendId],
+    references: [friends.id],
+  })
+}));
 
 // Export type for TypeScript usage
 export type User = typeof users.$inferSelect;

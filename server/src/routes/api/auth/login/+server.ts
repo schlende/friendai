@@ -19,7 +19,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     const validatedData = loginSchema.parse(body);
 
     // Find user by email
-    const user = await db.select().from(users).where(
+    const user = await db.instance.select().from(users).where(
       eq(users.email, validatedData.email)
     ).limit(1);
 

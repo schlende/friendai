@@ -26,7 +26,7 @@ export const POST: RequestHandler = async ({ request }) => {
     const validatedData = registerSchema.parse(body);
 
     // Check if user already exists
-    const existingUser = await db.select().from(users).where(
+    const existingUser = await db.instance.select().from(users).where(
       or(
         eq(users.email, validatedData.email),
         eq(users.username, validatedData.username)
@@ -43,7 +43,7 @@ export const POST: RequestHandler = async ({ request }) => {
     const hashedPassword = await bcrypt.hash(validatedData.password, 10);
 
     // Create the user
-    const newUser = await db.insert(users).values({
+    const newUser = await db.instance.insert(users).values({
       ...validatedData,
       password: hashedPassword,
     }).returning();

@@ -37,7 +37,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     const { text } = recommendSchema.parse(body);
 
     // Get all friends for the user
-    const userFriends = await db.select()
+    const userFriends = await db.instance.select()
       .from(friends)
       .where(eq(friends.userId, user.id));
 

@@ -22,7 +22,7 @@ export const GET: RequestHandler = async ({ params, cookies }) => {
   }
 
   try {
-    const friend = await db.select().from(friends).where(
+    const friend = await db.instance.select().from(friends).where(
       and(
         eq(friends.id, parseInt(params.id)),
         eq(friends.userId, user.id)
@@ -50,7 +50,7 @@ export const PUT: RequestHandler = async ({ params, request, cookies }) => {
     const body = await request.json();
     const validatedData = friendUpdateSchema.parse(body);
 
-    const updatedFriend = await db.update(friends)
+    const updatedFriend = await db.instance.update(friends)
       .set({
         ...validatedData,
         birthday: validatedData.birthday ? new Date(validatedData.birthday) : undefined,
@@ -91,7 +91,7 @@ export const DELETE: RequestHandler = async ({ params, cookies }) => {
   }
 
   try {
-    const deletedFriend = await db.delete(friends)
+    const deletedFriend = await db.instance.delete(friends)
       .where(
         and(
           eq(friends.id, parseInt(params.id)),
