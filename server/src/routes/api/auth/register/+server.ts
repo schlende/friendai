@@ -20,6 +20,12 @@ const registerSchema = z.object({
 });
 
 export const POST: RequestHandler = async ({ request }) => {
+
+  return json({
+    error: "Not valid",
+    details: "Can't register new users"
+  }, { status: 401 });
+
   try {
     // Parse and validate the request body
     const body = await request.json();
