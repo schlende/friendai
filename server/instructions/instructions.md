@@ -37,14 +37,16 @@ You will be using:
     5. lastrecommended - datetime - the last time we made a recommendation about this person
     6. priority - enum (low,med,high)
 
-3. recommendations table
+3. dailyrecommended table
     1. id field - primary key, sequential
     2. user_id - foreign key that shows who the recommendation belongs to
     3. friend_id - foreign key that shows which friend the recommendation is for
-    4. type - recommendation type (activity, gift, message)
+    4. reason - recommendation type (longtimenosee, firstcontact, strengthenties)
     5. datetime - date and time of the recommendation
     6. actiondate - date and time that the action was taken
     7. status - enum new, used, dismissed
+    8. recommendations - json - a long list of recommended ideas... with duration (short, med, long)
+
 
 ## APIs (JSON)
 1. Registration api
@@ -73,6 +75,9 @@ You will be using:
     - uses the id from the cookie
     - takes in JSON for all fields in users table
     - updates database with JSON values
+9. Recommend people API - you can enter in free form text eg: "I'm going hiking this afternoon"... and it will return a list of people who might like to go with you from your pool
+    - takes in free-form text...
+
 
 ## Database connection
 
@@ -83,17 +88,17 @@ You will be using:
     1. Product name: Friend AI
     2. CTA: Download app
 
-1. A header section
+2. A header section
     1. Positioning: Friendship Personal Assistant
     2. Headline: Build And Strengthen your Relationships
     3. Subheadline: Our AI agent turns new acquaintances into life-long friends by helping you set up chances to get together
     and do nice things for eachother...
     4. CTA: Sign Up Now
 
-2. A stakes section
+3. A stakes section
     1. It's hard to make new friends as an adult and friends are one of the joys of life. If your life is busy you're missing out on turning those chance encounters into rewarding relationships.
 
-3. Value proposition section
+4. Value proposition section
     1. Turn new acquaintances into friends
         1. Our AI uses "relationship science" to pick the perfect time and place for follow-up meetings with a new acquaintance
         2. We use social network information and event calendars in your area to make "smart suggestions" for activities you'll both enjoy
@@ -108,28 +113,53 @@ You will be using:
     4. Focus on building relationships with the people who matter most
         1. Our "inner circle" system helps you focus on the relationships you want the most
 
-4. A guide section
+5. A guide section
     1. Our team is a bunch of expats that moved to Kaohsuing, and when you move you have to make new friends. We always wanted something that would ease the complex process of getting to know new people and keeping in touch with old friends and that's why we came up with Friend AI.
 
-5. A how to buy plan section
+6. A how to buy plan section
     1. Download the app
     2. Pick people want to turn into closer friend
     3. Friend AI goes to work to build you stronger relationship
 
-6. A pricing section
+7. A pricing section
     1. Plans
         1. Free
         2. Pro connector (10 inner-circle people) - $30 / month
         3. Master connector (unlimited inner-circle people) - $100 / month
 
-7. Footer
+8. Footer
     1. About us link
     2. Privacy policy link
 
-# Documentation
-
-```
-```
 
 # Current file structure
-
+friendaiserver
+├── README.md
+├── drizzle.config.ts
+├── e2e
+│   └── demo.test.ts
+├── instructions
+│   └── instructions.md
+├── package-lock.json
+├── package.json
+├── playwright.config.ts
+├── postcss.config.js
+├── src
+│   ├── app.css
+│   ├── app.d.ts
+│   ├── app.html
+│   ├── demo.spec.ts
+│   ├── lib
+│   │   ├── index.ts
+│   │   └── server
+│   │       └── db
+│   └── routes
+│       ├── +layout.svelte
+│       └── +page.svelte
+├── static
+│   └── favicon.png
+├── svelte.config.js
+├── tailwind.config.ts
+├── tsconfig.json
+├── vite.config.ts
+└── wrangler.jsonc
