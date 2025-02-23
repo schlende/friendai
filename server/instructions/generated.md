@@ -80,15 +80,19 @@
 
 ### 3.4. Recommendations
 
-- **Recommendations Endpoint:**
-  - **URL:** `/api/recommendations`
+- **Daily Recommendations Endpoint:**
+  - **URL:** `/api/recommendation`
   - **Methods:**
-    - `GET` – Fetch a list of recommendations based on user data.
-    - `POST` – Accept a recommendation submission.
+    - `GET` – Fetch a list of recommendations based on user data for the past 2 days.
+
+- **Recommendation Update Endpoint:**
+  - **URL:** `/api/recommendation/[id]`
+  - **Methods:**
+    - `PUT` – Update recommendation status and action date
+    - `DELETE` – Remove a recommendation
   - **Payload (for POST):** JSON containing recommendation details.
   - **Response:** 
-    - For `GET`: JSON array of recommendations.
-    - For `POST`: JSON confirmation message.
+    - For `PUT/DELETE`: JSON confirmation message.
   - **Notes:** Maintain a consistent response structure for both GET and POST methods.
 
 ---
