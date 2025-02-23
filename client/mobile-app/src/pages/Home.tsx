@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import { useEffect, useState } from "react";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 const friendAiUrl = "https://friendai.pages.dev/api/recommendation";
 export default function Home() {
@@ -86,7 +87,7 @@ export default function Home() {
             gap: "10px",
           }}
         >
-          <div className="loader" style={{ color: "black" }} />
+          <LoadingSpinner />
         </div>
       ) : (
         <div className="slider">

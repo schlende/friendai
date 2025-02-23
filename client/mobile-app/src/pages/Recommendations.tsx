@@ -3,9 +3,11 @@ import Card from "./components/Card";
 import "../styles/Card.css"; // Import the CSS file
 import { useNavigate, useParams } from "react-router-dom";
 import { Modal } from "./components/Modal";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 const Recommendations: React.FC = () => {
   const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedRecommendation, setSelectedRecommendation] = useState<
     string | null
   >(null);
@@ -25,6 +27,7 @@ const Recommendations: React.FC = () => {
     const recommendationsUrl = "https://friendai.pages.dev/api/recommendation";
     const fetchRecommendations = async () => {
       console.log("fetching recommendations");
+      setIsLoading(true);
       const response = await fetch(recommendationsUrl);
       const data = await response.json();
       console.log("data", data);
@@ -57,6 +60,7 @@ const Recommendations: React.FC = () => {
           onTweakThis: () => console.log("Tweak this"),
         })) ?? [];
       setRecommendations(transformedRecommendations);
+      setIsLoading(false);
     };
     fetchRecommendations();
   }, [id]);
@@ -65,33 +69,49 @@ const Recommendations: React.FC = () => {
       <button className="back-button" onClick={() => navigate("/")}>
         Back
       </button>
-      {recommendations.map((rec, index) => (
-        <Card
-          key={index}
-          title={rec.title}
-          date={rec.date}
-          description={rec.description}
-          onDoThis={() => setSelectedRecommendation(rec.id.toString())}
-          onTweakThis={() => setSelectedRecommendation(rec.title)}
-        />
-      ))}
-      <button
-        className="load-more-button"
-        onClick={() => console.log("Load more")}
-      >
-        Load More
-      </button>
-      <Modal
-        isOpen={selectedRecommendation !== null}
-        onClose={() => setSelectedRecommendation(null)}
-      >
-        <div>
-          <h1 style={{ color: "black" }}>Modal</h1>
-          <p style={{ color: "black" }}>
-            Currently selected recommendation: {selectedRecommendation}
-          </p>
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "200px",
+          }}
+        >
+          <LoadingSpinner />
         </div>
-      </Modal>
+      ) : (
+        <>
+          {recommendations.map((rec, index) => (
+            <Card
+              key={index}
+              title={rec.title}
+              date={rec.date}
+              description={rec.description}
+              onDoThis={() => setSelectedRecommendation(rec.id.toString())}
+              onTweakThis={() => setSelectedRecommendation(rec.title)}
+            />
+          ))}
+
+          <button
+            className="load-more-button"
+            onClick={() => console.log("Load more")}
+          >
+            Load More
+          </button>
+          <Modal
+            isOpen={selectedRecommendation !== null}
+            onClose={() => setSelectedRecommendation(null)}
+          >
+            <div>
+              <h1 style={{ color: "black" }}>Modal</h1>
+              <p style={{ color: "black" }}>
+                Currently selected recommendation: {selectedRecommendation}
+              </p>
+            </div>
+          </Modal>
+        </>
+      )}
     </div>
   );
 };
