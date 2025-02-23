@@ -1,56 +1,87 @@
-import MessageListItem from "../components/MessageListItem";
-import { useState } from "react";
-import { Message, getMessages } from "../data/messages";
 import {
+  IonAvatar,
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
   IonContent,
-  IonHeader,
-  IonList,
+  IonIcon,
+  IonItem,
+  IonLabel,
   IonPage,
-  IonRefresher,
-  IonRefresherContent,
-  IonTitle,
-  IonToolbar,
-  useIonViewWillEnter,
+  IonRippleEffect,
 } from "@ionic/react";
 import "./Home.css";
+import { useHistory } from "react-router-dom";
+import { iceCream } from "ionicons/icons";
 
 const Home: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-
-  useIonViewWillEnter(() => {
-    const msgs = getMessages();
-    setMessages(msgs);
-  });
-
-  const refresh = (e: CustomEvent) => {
-    setTimeout(() => {
-      e.detail.complete();
-    }, 3000);
-  };
+  const history = useHistory();
 
   return (
     <IonPage id="home-page">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Inbox2</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen>
-        <IonRefresher slot="fixed" onIonRefresh={refresh}>
-          <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
+        {/* let's add the friend-ai-logo.svg from the public folder here */}
+        <div style={{ paddingTop: "40px", paddingInline: "30px" }}>
+          <img
+            src="/friend-ai-logo.svg"
+            alt="Friend AI"
+            className="friend-ai-logo"
+          />
+        </div>
 
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Inbox</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-        <IonList>
-          {messages.map((m) => (
-            <MessageListItem key={m.id} message={m} />
-          ))}
-        </IonList>
+        <img
+          src="/my-circles-image.png"
+          alt="My Circles"
+          className="my-circles-image"
+        />
+        <div style={{ paddingInline: "20px" }}>
+          <IonCard>
+            <IonCardHeader>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ paddingRight: "10px" }}>
+                  <IonAvatar style={{ height: "43px", width: "43px" }}>
+                    <img
+                      alt="Silhouette of a person's head"
+                      src="https://ionicframework.com/docs/img/demos/avatar.svg"
+                    />
+                  </IonAvatar>
+                </div>
+                <IonLabel>
+                  You met Forest last week while walking your dog. Want to hang
+                  out again soon?
+                </IonLabel>
+              </div>
+            </IonCardHeader>
+            <IonCardContent>
+              <div className="button-container">
+                <IonButton
+                  fill="outline"
+                  shape="round"
+                  size="large"
+                  onClick={() => {
+                    history.push("/view-recommendations");
+                  }}
+                >
+                  Dismiss
+                  <IonRippleEffect />
+                </IonButton>
+                <IonButton
+                  shape="round"
+                  color="secondary"
+                  size="large"
+                  onClick={() => {
+                    history.push("/view-recommendations");
+                  }}
+                >
+                  <IonIcon slot="start" icon={iceCream} color="tertiary" />
+                  Arrange
+                  <IonRippleEffect />
+                </IonButton>
+              </div>
+            </IonCardContent>
+          </IonCard>
+        </div>
       </IonContent>
     </IonPage>
   );

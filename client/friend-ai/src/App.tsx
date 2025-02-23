@@ -29,10 +29,11 @@ import '@ionic/react/css/display.css';
 
 /* import '@ionic/react/css/palettes/dark.always.css'; */
 /* import '@ionic/react/css/palettes/dark.class.css'; */
-import '@ionic/react/css/palettes/dark.system.css';
+// import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import ViewRecommendations from "./pages/ViewRecommendations";
 
 setupIonicReact();
 
@@ -46,8 +47,11 @@ const App: React.FC = () => (
         <Route path="/home" exact={true}>
           <Home />
         </Route>
+        <Route path="/view-recommendations" exact={true}>
+          <ViewRecommendations />
+        </Route>
         <Route path="/message/:id">
-           <ViewMessage />
+          <ViewMessage />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
