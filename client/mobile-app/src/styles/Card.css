@@ -55,23 +55,26 @@
     font-size: 1.25rem;
     font-weight: bold;
     color: #2d6a4f;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     padding-left: 16px; /* Add padding to the left */
 }
 
 .card-date {
     font-size: 0.9rem;
     color: #555;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
     font-weight: bold; /* Make font bold */
     padding-left: 16px; /* Add padding to the left */
 }
 
 .card-description {
     font-size: 1rem;
-    color: #333;
-    margin-bottom: 16px;
+    font-weight: 550    ;
+    color: #989595;     
+    margin-bottom: 5px;
     padding-left: 16px; /* Add padding to the left */
+    padding-right: 16px; /* Add padding to the right */
+    line-height: 1.5; /* Adjust line height for better readability */
 }
 
 .card-buttons {
@@ -79,7 +82,7 @@
     gap: 8px; /* Reduce the gap between buttons */
     padding: 0 16px;
     justify-content: space-between;
-    margin-top: 16px;
+    margin-top: 5px;
     margin-bottom: 16px;    
 }
 
@@ -99,7 +102,7 @@
 
 .card-button {
     width: 140px; /* Increase the width of the buttons */
-    height: 40px;
+    height: 48px; /* Increase the height of the buttons */
     border-radius: 100px;
     padding: 8px 20px;
     display: flex;
@@ -122,14 +125,14 @@
 }
 
 .card-button-secondary {
-    color: grey;
+    color: grey;    
     background: white; /* Set background to white */
     border: 2px solid #ddd; /* Add grey border */
 }
 
 .load-more-button {
     margin-top: 16px;
-    padding: 12px 24px; /* Make the button a bit bigger */
+    padding: 16px 24px; /* Increase the padding to make the button thicker */
     font-size: 1.1rem; /* Slightly larger font size */
     font-weight: 600;
     color: grey;

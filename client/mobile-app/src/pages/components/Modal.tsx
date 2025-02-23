@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import "./Modal.css"; // Import the CSS file for styling
+import "../../styles/Modal.css";
 
 interface ModalProps {
   isOpen: boolean;

@@ -1,0 +1,117 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  max-width: 350px;
+  width: 100%; /* Changed from 100% to 90% to add padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5%; /* Center the modal with equal margins on both sides */
+}
+
+.modal-header {
+  align-self: flex-start;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #000;
+}
+
+.modal-body {
+  text-align: center;
+  font-size: 1rem;
+  color: #000;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Add styles for the event message element */
+.event-message {
+  border: 1px solid #8c8a8a !important; /* Ensure the border color is applied */
+  border-radius: 8px; /* Little radius */
+  padding: 16px;
+  margin-bottom: 16px;
+  width: calc(100% - 2px); /* Adjust width to ensure border is visible */
+  height: 200px; /* Ensure the height is consistent */
+  text-align: center;
+  color: black;
+  font-size: 1rem;
+  resize: none;
+  background: inherit;
+  display: block;
+  margin: 0 auto; /* Center the textarea */
+}
+
+.modal-button-copy {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  width: 171px;
+  height: 56px;
+  gap: 8px;
+  border-radius: 100px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #F174FF; /* Updated to the new color */
+  color: #333;
+  border: 2px solid #ddd;
+}
+
+.modal-button-cancel {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  width: 91px;
+  height: 56px;
+  gap: 8px;
+  border-radius: 100px !important;  /* Make the button rounded */
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: white;
+  color: #333;
+  border: 2px solid #ddd;
+}
+
+a {
+  color: teal; /* Set link color to Teal */
+}
