@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router";
 import { VoiceSummary } from "./pages/VoiceSummary";
 import Home from "./pages/Home";
-import { Recommendations } from "./pages/Recommendations";
+import Recommendations from "./pages/Recommendations";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 
@@ -15,6 +15,8 @@ function App() {
         <Route path="/recommendations" element={<Recommendations />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/" element={<VoiceSummary />} />
+
       </Routes>
     </BrowserRouter>
   );
