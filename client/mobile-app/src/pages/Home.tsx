@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 const friendAiUrl = "https://friendai.pages.dev/api/recommendation";
 export default function Home() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [friends, setFriends] = useState<
     {
       id: number;
@@ -32,10 +33,12 @@ export default function Home() {
 
   useEffect(() => {
     const fetchFriendAi = async () => {
+      setIsLoading(true);
       const response = await fetch(friendAiUrl);
       const data = await response.json();
       console.log(data);
       setFriends(data.recommendations ?? []);
+      setIsLoading(false);
     };
     fetchFriendAi();
   }, []);
@@ -73,72 +76,91 @@ export default function Home() {
           width="100%"
         />
       </div>
-      <div className="slider">
-        <div className="slides" style={{ paddingInline: "50px" }}>
-          {friends.map((slide) => (
-            <div
-              key={slide.id}
-              id={`slide-${slide.id}`}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                backgroundColor: "white",
-                padding: "28px 32px",
-                borderRadius: "16px",
-                width: "100%",
-              }}
-            >
-              <div style={{ display: "flex", gap: "10px" }}>
-                <img
-                  src="/src/assets/avatar2.png"
-                  alt="Avatar 2"
-                  style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-                />
-                <div style={{ color: "black", textAlign: "start" }}>
-                  Want to hang out with{" "}
-                  <span style={{ color: "rgba(0, 155, 146, 1)" }}>
-                    {slide.friend.name}
-                  </span>
-                  {"? You met "}
-                  {slide.friend.howwemet.toLocaleLowerCase()}
-                  {". "}
-                  Would you want to{" "}
-                  {slide.recommendations[0].idea?.toLowerCase()}?{" "}
-                  {capitalizeFirstLetter(slide.recommendations[1].reason)}
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          <div className="loader" style={{ color: "black" }} />
+        </div>
+      ) : (
+        <div className="slider">
+          <div className="slides" style={{ paddingInline: "50px" }}>
+            {friends.map((slide) => (
+              <div
+                key={slide.id}
+                id={`slide-${slide.id}`}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  backgroundColor: "white",
+                  padding: "28px 32px",
+                  borderRadius: "16px",
+                  width: "100%",
+                }}
+              >
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <img
+                    src="/src/assets/avatar2.png"
+                    alt="Avatar 2"
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <div style={{ color: "black", textAlign: "start" }}>
+                    Want to hang out with{" "}
+                    <span style={{ color: "rgba(0, 155, 146, 1)" }}>
+                      {slide.friend.name}
+                    </span>
+                    {"? You met "}
+                    {slide.friend.howwemet.toLocaleLowerCase()}
+                    {". "}
+                    Would you want to{" "}
+                    {slide.recommendations[0].idea?.toLowerCase()}?{" "}
+                    {capitalizeFirstLetter(slide.recommendations[1].reason)}
+                  </div>
+                </div>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <button
+                    style={{
+                      flex: 1,
+                      backgroundColor: "rgba(255, 255, 255, 0.5)",
+                      color: "black",
+                      padding: "10px 20px",
+                      borderRadius: "40px",
+                      border: "1px solid rgba(0, 0, 0, 0.5)",
+                    }}
+                    onClick={() => navigate("/voice-summary")}
+                  >
+                    Dismiss
+                  </button>
+                  <button
+                    style={{
+                      flex: 1,
+                      backgroundColor: "rgba(241, 116, 255, 1)",
+                      color: "white",
+                      padding: "10px 20px",
+                      borderRadius: "40px",
+                    }}
+                    onClick={() => navigate(`/recommendation/${slide.id}`)}
+                  >
+                    Arrange
+                  </button>
                 </div>
               </div>
-              <div style={{ display: "flex", gap: "10px" }}>
-                <button
-                  style={{
-                    flex: 1,
-                    backgroundColor: "rgba(255, 255, 255, 0.5)",
-                    color: "black",
-                    padding: "10px 20px",
-                    borderRadius: "40px",
-                    border: "1px solid rgba(0, 0, 0, 0.5)",
-                  }}
-                  onClick={() => navigate("/voice-summary")}
-                >
-                  Dismiss
-                </button>
-                <button
-                  style={{
-                    flex: 1,
-                    backgroundColor: "rgba(241, 116, 255, 1)",
-                    color: "white",
-                    padding: "10px 20px",
-                    borderRadius: "40px",
-                  }}
-                  onClick={() => navigate(`/recommendation/${slide.id}`)}
-                >
-                  Arrange
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          å
         </div>
-      </div>
+      )}
     </div>
   );
 }
