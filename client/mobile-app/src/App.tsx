@@ -13,10 +13,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/voice-summary" element={<VoiceSummary />} />
         <Route path="/recommendations" element={<Recommendations />} />
+        <Route path="/recommendation/:id" element={<Recommendations />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<VoiceSummary />} />
-
       </Routes>
     </BrowserRouter>
   );

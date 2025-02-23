@@ -1,19 +1,48 @@
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const friendAiUrl = "https://friendai.pages.dev/api/friend/index";
+const friendAiUrl = "https://friendai.pages.dev/api/recommendation";
 export default function Home() {
   const navigate = useNavigate();
+  const [friends, setFriends] = useState<
+    {
+      id: number;
+      userId: string;
+      friendId: number;
+      friend: {
+        id: number;
+        name: string;
+        howwemet: string;
+        birthday: string;
+        interests: string;
+        lastRecommended: string;
+        priority: string;
+      };
+      reason: string;
+      datetime: string;
+      actionDate: string;
+      status: string;
+      recommendations: {
+        idea: string;
+        reason: string;
+      }[];
+    }[]
+  >([]);
 
   useEffect(() => {
     const fetchFriendAi = async () => {
       const response = await fetch(friendAiUrl);
       const data = await response.json();
       console.log(data);
+      setFriends(data.recommendations ?? []);
     };
     fetchFriendAi();
   }, []);
+
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   return (
     <div
@@ -46,9 +75,10 @@ export default function Home() {
       </div>
       <div className="slider">
         <div className="slides" style={{ paddingInline: "50px" }}>
-          {[1, 2, 3, 4, 5].map((slide) => (
+          {friends.map((slide) => (
             <div
-              id={`slide-${slide}`}
+              key={slide.id}
+              id={`slide-${slide.id}`}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -65,10 +95,17 @@ export default function Home() {
                   alt="Avatar 2"
                   style={{ width: "30px", height: "30px", borderRadius: "50%" }}
                 />
-                <div style={{ color: "black", flex: 1 }}>
-                  You met{" "}
-                  <span style={{ color: "rgba(0, 155, 146, 1)" }}>Forest</span>{" "}
-                  last week while walking your dog. Want to hang out again soon?
+                <div style={{ color: "black", textAlign: "start" }}>
+                  Want to hang out with{" "}
+                  <span style={{ color: "rgba(0, 155, 146, 1)" }}>
+                    {slide.friend.name}
+                  </span>
+                  {"? You met "}
+                  {slide.friend.howwemet.toLocaleLowerCase()}
+                  {". "}
+                  Would you want to{" "}
+                  {slide.recommendations[0].idea?.toLowerCase()}?{" "}
+                  {capitalizeFirstLetter(slide.recommendations[1].reason)}
                 </div>
               </div>
               <div style={{ display: "flex", gap: "10px" }}>
@@ -93,7 +130,7 @@ export default function Home() {
                     padding: "10px 20px",
                     borderRadius: "40px",
                   }}
-                  onClick={() => navigate("/recommendations")}
+                  onClick={() => navigate(`/recommendation/${slide.id}`)}
                 >
                   Arrange
                 </button>

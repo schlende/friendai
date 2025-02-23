@@ -1,44 +1,64 @@
-import React from 'react';
-import Card from './components/Card';
-import '../styles/Card.css'; // Import the CSS file
-import { useNavigate } from 'react-router-dom';
-
-const recommendations = [
-  {
-    title: "Music in the park",
-    date: "This Sunday, 3:00 pm",
-    description: "Forest likes outdoor music, he may enjoy the festival",
-    onDoThis: () => console.log("Let's Do This"),
-    onTweakThis: () => console.log("Tweak this")
-  },
-  {
-    title: "Art Exhibition",
-    date: "Next Saturday, 1:00 pm",
-    description: "Forest enjoys art, he might like the new exhibition",
-    onDoThis: () => console.log("Let's Do This"),
-    onTweakThis: () => console.log("Tweak this")
-  },
-  {
-    title: "Food Festival",
-    date: "Next Friday, 5:00 pm",
-    description: "Forest loves trying new foods, he should check out the festival",
-    onDoThis: () => console.log("Let's Do This"),
-    onTweakThis: () => console.log("Tweak this")
-  },
-  {
-    title: "Book Fair",
-    date: "Tomorrow, 10:00 am",
-    description: "Forest is an avid reader, he might enjoy the book fair",
-    onDoThis: () => console.log("Let's Do This"),
-    onTweakThis: () => console.log("Tweak this")
-  }
-];
+import React, { useEffect, useState } from "react";
+import Card from "./components/Card";
+import "../styles/Card.css"; // Import the CSS file
+import { useNavigate, useParams } from "react-router-dom";
 
 const Recommendations: React.FC = () => {
+  const { id } = useParams();
+  console.log("id", id);
   const navigate = useNavigate();
+  const [recommendations, setRecommendations] = useState<
+    {
+      title: string;
+      date: string;
+      description: string;
+      onDoThis: () => void;
+      onTweakThis: () => void;
+    }[]
+  >([]);
+  useEffect(() => {
+    const recommendationsUrl = "https://friendai.pages.dev/api/recommendation";
+    const fetchRecommendations = async () => {
+      console.log("fetching recommendations");
+      const response = await fetch(recommendationsUrl);
+      const data = await response.json();
+      console.log("data", data);
+      const recommendationForFriend = (
+        data.recommendations as {
+          id: number;
+          userId: string;
+          friendId: number;
+          reason: string;
+          datetime: string;
+          actionDate: string;
+          status: string;
+          recommendations: {
+            idea: string;
+            reason: string;
+          }[];
+        }[]
+      ).find((rec) => rec.id === Number(id));
+
+      const transformedRecommendations =
+        recommendationForFriend?.recommendations.map((rec) => ({
+          title: rec.idea,
+          // a random time between 1 and 3 days from now
+          date: new Date(
+            new Date().getTime() + Math.random() * 2 * 24 * 60 * 60 * 1000
+          ).toLocaleString(),
+          description: rec.idea,
+          onDoThis: () => console.log("Let's Do This"),
+          onTweakThis: () => console.log("Tweak this"),
+        })) ?? [];
+      setRecommendations(transformedRecommendations);
+    };
+    fetchRecommendations();
+  }, [id]);
   return (
     <div className="recommendations-container">
-      <button className="back-button" onClick={() => navigate('/')}>Back</button>
+      <button className="back-button" onClick={() => navigate("/")}>
+        Back
+      </button>
       {recommendations.map((rec, index) => (
         <Card
           key={index}
@@ -49,7 +69,12 @@ const Recommendations: React.FC = () => {
           onTweakThis={rec.onTweakThis}
         />
       ))}
-      <button className="load-more-button" onClick={() => console.log("Load more")}>Load More</button>
+      <button
+        className="load-more-button"
+        onClick={() => console.log("Load more")}
+      >
+        Load More
+      </button>
     </div>
   );
 };
