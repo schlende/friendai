@@ -59,7 +59,6 @@
 .event-message {
   border: 1px solid #8c8a8a !important; /* Ensure the border color is applied */
   border-radius: 8px; /* Little radius */
-  padding: 16px;
   margin-bottom: 16px;
   width: calc(100% - 2px); /* Adjust width to ensure border is visible */
   height: 200px; /* Ensure the height is consistent */

@@ -5,12 +5,12 @@ import { Modal, ModalProps } from "./components/Modal";
 import LoadingSpinner from "./components/LoadingSpinner";
 
 const MessageModal = (props: ModalProps) => {
-  const [message, setMessage] =
-    useState(`Would you like to go to Music in the park this Sunday at 3:00pm?
+  const { initialValue } = props;
+  const [message, setMessage] = useState(initialValue ?? "");
 
-Looks like they have music and food, it’s gonna be fun!
-You can check out the event here: musicinpark/abcd123
-Let me know if you’re up for it!`);
+  useEffect(() => {
+    setMessage(initialValue ?? "");
+  }, [initialValue]);
 
   const [isCopied, setIsCopied] = useState(false);
 
@@ -62,7 +62,7 @@ Let me know if you’re up for it!`);
               setIsCopied(true);
             }}
           >
-            {isCopied ? "Copied" : "Copy1"}
+            {isCopied ? "Copied" : "Copy"}
           </button>
         </div>
       </div>
@@ -84,6 +84,7 @@ const Recommendations: React.FC = () => {
       title: string;
       date: string;
       description: string;
+      inviteText: string;
       onDoThis: () => void;
       onTweakThis: () => void;
     }[]
@@ -106,8 +107,10 @@ const Recommendations: React.FC = () => {
           actionDate: string;
           status: string;
           recommendations: {
+            id: number;
             idea: string;
             reason: string;
+            invitetext: string;
           }[];
         }[]
       ).find((rec) => rec.id === Number(id));
@@ -121,9 +124,11 @@ const Recommendations: React.FC = () => {
             new Date().getTime() + Math.random() * 2 * 24 * 60 * 60 * 1000
           ).toLocaleString(),
           description: rec.idea,
+          inviteText: rec.invitetext,
           onDoThis: () => console.log("Let's Do This"),
           onTweakThis: () => console.log("Tweak this"),
         })) ?? [];
+      console.log("transformedRecommendations", transformedRecommendations);
       setRecommendations(transformedRecommendations);
       setIsLoading(false);
     };
@@ -167,14 +172,12 @@ const Recommendations: React.FC = () => {
           <MessageModal
             isOpen={selectedRecommendation !== null}
             onClose={() => setSelectedRecommendation(null)}
-          >
-            <div>
-              <h1 style={{ color: "black" }}>Modal</h1>
-              <p style={{ color: "black" }}>
-                Currently selected recommendation: {selectedRecommendation}
-              </p>
-            </div>
-          </MessageModal>
+            initialValue={
+              recommendations.find(
+                (rec) => rec.id === Number(selectedRecommendation)
+              )?.inviteText
+            }
+          />
         </>
       )}
     </div>

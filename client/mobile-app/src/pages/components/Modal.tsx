@@ -3,9 +3,10 @@ import ReactDOM from "react-dom";
 import "../../styles/Modal.css";
 
 export interface ModalProps {
+  initialValue?: string;
   isOpen: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
