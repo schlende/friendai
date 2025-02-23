@@ -4,6 +4,7 @@ import { db } from '$lib/server/db';
 import { friends } from '$lib/server/db/schema';
 import { z } from 'zod';
 import { eq, and } from 'drizzle-orm';
+import { getUserFromSession } from '$lib/utils';
 
 // Validation schema for friend updates
 const friendUpdateSchema = z.object({
@@ -13,17 +14,6 @@ const friendUpdateSchema = z.object({
   interests: z.string().optional(),
   priority: z.enum(['low', 'med', 'high']).default('med'),
 }).strict();
-
-// Helper to get user from session
-async function getUserFromSession(cookies: any) {
-  const sessionCookie = cookies.get('session');
-  if (!sessionCookie) return null;
-  try {
-    return JSON.parse(sessionCookie);
-  } catch {
-    return null;
-  }
-}
 
 export const GET: RequestHandler = async ({ params, cookies }) => {
   const user = await getUserFromSession(cookies);

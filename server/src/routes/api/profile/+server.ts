@@ -4,27 +4,17 @@ import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
 import { z } from 'zod';
 import { eq } from 'drizzle-orm';
+import { getUserFromSession } from '$lib/utils';
 
 // Validation schema for profile updates
 const profileSchema = z.object({
-  fullName: z.string().min(2).max(100),
+  username: z.string().min(1).max(50).optional(),
+  fullName: z.string().min(1).max(100).optional(),
   interests: z.string().optional(),
-  address: z.string().optional(),
-  city: z.string().optional(),
-  country: z.string().optional(),
+  address: z.string().max(255).optional(),
+  city: z.string().max(100).optional(),
+  country: z.string().max(100).optional(),
 }).strict(); // Prevents additional properties like password or id
-
-// Helper to get user from session
-async function getUserFromSession(cookies: any) {
-  const sessionCookie = cookies.get('session');
-  if (!sessionCookie) return null;
-  
-  try {
-    return JSON.parse(sessionCookie);
-  } catch {
-    return null;
-  }
-}
 
 export const PUT: RequestHandler = async ({ request, cookies }) => {
   const user = await getUserFromSession(cookies);

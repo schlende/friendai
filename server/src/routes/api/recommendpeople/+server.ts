@@ -4,22 +4,12 @@ import { db } from '$lib/server/db';
 import { friends } from '$lib/server/db/schema';
 import { z } from 'zod';
 import { eq } from 'drizzle-orm';
+import { getUserFromSession } from '$lib/utils';
 
 // Validation schema
 const recommendSchema = z.object({
   text: z.string().min(1, 'Activity description is required')
 });
-
-// Helper to get user from session
-async function getUserFromSession(cookies: any) {
-  const sessionCookie = cookies.get('session');
-  if (!sessionCookie) return null;
-  try {
-    return JSON.parse(sessionCookie);
-  } catch {
-    return null;
-  }
-}
 
 // Helper to calculate relevance score based on interests match
 function calculateRelevance(friendInterests: string, activityText: string): number {

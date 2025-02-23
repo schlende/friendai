@@ -3,17 +3,13 @@ import type { RequestHandler } from './$types';
 import { db } from '$lib/server/db';
 import { dailyRecommended } from '$lib/server/db/schema';
 import { and, eq, gte } from 'drizzle-orm';
+import { getUserFromSession } from '$lib/utils';
+import { z } from 'zod';
 
-// Helper to get user from session
-async function getUserFromSession(cookies: any) {
-  const sessionCookie = cookies.get('session');
-  if (!sessionCookie) return null;
-  try {
-    return JSON.parse(sessionCookie);
-  } catch {
-    return null;
-  }
-}
+// Validation schema for recommendation updates
+const recommendationSchema = z.object({
+  status: z.enum(['new', 'used', 'dismissed']),
+});
 
 export const GET: RequestHandler = async ({ cookies }) => {
   const user = await getUserFromSession(cookies);
