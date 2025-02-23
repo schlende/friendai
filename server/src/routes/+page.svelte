@@ -1,7 +1,6 @@
 <script>
     import { fade, fly } from 'svelte/transition';
     import { Heart, Users, Calendar, Gift, MapPin, ChevronRight } from 'lucide-svelte';
-    import { spring } from 'svelte/motion';
   
     const valueProps = [
         {
