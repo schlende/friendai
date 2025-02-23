@@ -2,7 +2,7 @@ CREATE TYPE "public"."priority" AS ENUM('low', 'med', 'high');--> statement-brea
 CREATE TYPE "public"."recommendation_reason" AS ENUM('longtimenosee', 'firstcontact', 'strengthenties');--> statement-breakpoint
 CREATE TYPE "public"."recommendation_status" AS ENUM('new', 'used', 'dismissed');--> statement-breakpoint
 CREATE TABLE "daily_recommended" (
-	"id" integer PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY NOT NULL,
 	"user_id" uuid NOT NULL,
 	"friend_id" integer NOT NULL,
 	"reason" "recommendation_reason" NOT NULL,
@@ -13,8 +13,9 @@ CREATE TABLE "daily_recommended" (
 );
 --> statement-breakpoint
 CREATE TABLE "friends" (
-	"id" integer PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY NOT NULL,
 	"user_id" uuid NOT NULL,
+	"name" varchar(100) NOT NULL,
 	"birthday" timestamp,
 	"interests" text,
 	"last_recommended" timestamp,

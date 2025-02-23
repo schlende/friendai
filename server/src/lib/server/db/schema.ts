@@ -6,7 +6,8 @@ import {
   timestamp,
   integer,
   pgEnum,
-  json
+  json,
+  serial
 } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
@@ -28,10 +29,11 @@ export const users = pgTable('users', {
 export const priorityEnum = pgEnum('priority', ['low', 'med', 'high']);
 
 export const friends = pgTable('friends', {
-  id: integer('id').primaryKey(),
+  id: serial('id').primaryKey(),
   userId: uuid('user_id')
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
+  name: varchar('name', { length: 100 }).notNull(),
   birthday: timestamp('birthday'),
   interests: text('interests'),
   lastRecommended: timestamp('last_recommended'),
@@ -53,7 +55,7 @@ export const recommendationStatusEnum = pgEnum('recommendation_status', [
 ]);
 
 export const dailyRecommended = pgTable('daily_recommended', {
-  id: integer('id').primaryKey(),
+  id: serial('id').primaryKey(),
   userId: uuid('user_id')
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
