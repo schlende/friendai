@@ -1,7 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
+import { useEffect } from "react";
+
+const friendAiUrl = "https://friendai.pages.dev/api/friend/index";
 export default function Home() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchFriendAi = async () => {
+      const response = await fetch(friendAiUrl);
+      const data = await response.json();
+      console.log(data);
+    };
+    fetchFriendAi();
+  }, []);
+
   return (
     <div
       style={{
