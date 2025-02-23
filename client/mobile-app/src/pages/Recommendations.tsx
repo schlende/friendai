@@ -1,71 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Card from "./components/Card";
 import { useNavigate, useParams } from "react-router-dom";
-import { Modal } from "./components/Modal";
-
-const MessageModal = (props: ReturnType<typeof Modal>) => {
-  const [message, setMessage] =
-    useState(`Would you like to go to Music in the park this Sunday at 3:00pm?
-
-Looks like they have music and food, it’s gonna be fun!
-You can check out the event here: musicinpark/abcd123
-Let me know if you’re up for it!`);
-  return (
-    <Modal {...props}>
-      <div style={{ textAlign: "left" }}>
-        <div
-          style={{ fontWeight: "bold", marginBottom: "16px", color: "black" }}
-        >
-          Invite Forrest
-        </div>
-        <textarea
-          id="eventMessage"
-          className="event-message"
-          
-          style={{
-            width: "100%",
-            height: "200px",
-            textAlign: "left" /* Align text to the left */,
-            color: "black",
-            fontSize: "1rem",
-            border: "none",
-            resize: "none",
-            background: "inherit",
-          }}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <div style={{ display: "flex", gap: "10px", marginTop: "16px" }}>
-          <button
-            className="modal-button-cancel"
-            onClick={() => setSelectedRecommendation(null)}
-          >
-            {" "}
-            Cancel
-          </button>
-          <button
-            className="modal-button-copy"
-            onClick={() => {
-              const text = document.getElementById("eventMessage")?.value || "";
-              navigator.clipboard.writeText(text);
-            }}
-          >
-            Copy
-          </button>
-        </div>
-      </div>
-    </Modal>
-  );
-};
+import { Modal, ModalProps } from "./components/Modal";
 import LoadingSpinner from "./components/LoadingSpinner";
 
-const MessageModal = (props: ReturnType<typeof Modal>) => {
+const MessageModal = (props: ModalProps) => {
   const [message, setMessage] =
     useState(`Would you like to go to Music in the park this Sunday at 3:00pm?
 
 Looks like they have music and food, it’s gonna be fun!
 You can check out the event here: musicinpark/abcd123
 Let me know if you’re up for it!`);
+
+  const [isCopied, setIsCopied] = useState(false);
+
+  useEffect(() => {
+    if (isCopied) {
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+    }
+  }, [isCopied]);
+
   return (
     <Modal {...props}>
       <div style={{ textAlign: "left" }}>
@@ -77,7 +33,6 @@ Let me know if you’re up for it!`);
         <textarea
           id="eventMessage"
           className="event-message"
-          
           style={{
             width: "100%",
             height: "200px",
@@ -94,7 +49,7 @@ Let me know if you’re up for it!`);
         <div style={{ display: "flex", gap: "10px", marginTop: "16px" }}>
           <button
             className="modal-button-cancel"
-            onClick={() => setSelectedRecommendation(null)}
+            onClick={() => props.onClose()}
           >
             {" "}
             Cancel
@@ -102,11 +57,12 @@ Let me know if you’re up for it!`);
           <button
             className="modal-button-copy"
             onClick={() => {
-              const text = document.getElementById("eventMessage")?.value || "";
-              navigator.clipboard.writeText(text);
+              console.log("copying message", message);
+              navigator.clipboard.writeText(message);
+              setIsCopied(true);
             }}
           >
-            Copy
+            {isCopied ? "Copied" : "Copy1"}
           </button>
         </div>
       </div>
@@ -208,7 +164,7 @@ const Recommendations: React.FC = () => {
           >
             Load More
           </button>
-          <Modal
+          <MessageModal
             isOpen={selectedRecommendation !== null}
             onClose={() => setSelectedRecommendation(null)}
           >
@@ -218,7 +174,7 @@ const Recommendations: React.FC = () => {
                 Currently selected recommendation: {selectedRecommendation}
               </p>
             </div>
-          </Modal>
+          </MessageModal>
         </>
       )}
     </div>

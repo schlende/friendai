@@ -5,12 +5,17 @@ interface CardProps {
   title: string;
   date: string;
   description: string;
-  image: string;
   onDoThis: () => void;
   onTweakThis: () => void;
 }
 
-const Card: React.FC<CardProps> = ({ title, date, description, image, onDoThis, onTweakThis }) => {
+const Card: React.FC<CardProps> = ({
+  title,
+  date,
+  description,
+  onDoThis,
+  onTweakThis,
+}) => {
   return (
     <div className="card-container">
       <div className="card">
