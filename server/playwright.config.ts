@@ -1,10 +1,26 @@
-import { defineConfig } from '@playwright/test';
+import { PlaywrightTestConfig, devices } from '@playwright/test';
+// import dotenv from 'dotenv';
+// dotenv.config({ path: "./.env.test" })
 
-export default defineConfig({
-  webServer: {
-    command: 'npm run build && npm run preview',
-    port: 8788
-  },
+const devconfig: PlaywrightTestConfig = {
 
-  testDir: 'e2e'
-});
+	use: {
+		baseURL: "http://localhost:5173"
+	},
+
+	timeout: 5000,
+	testDir: 'tests',
+	testMatch: ['**/*.test.ts'],
+};
+
+
+const prodconfig: PlaywrightTestConfig = {
+	webServer: {
+		command: 'npm run build && npm run preview',
+		port: 4173
+	},
+	testDir: 'tests',
+	testMatch: /(.+\.)?(test|spec)\.[jt]s/
+};
+
+export default devconfig;
