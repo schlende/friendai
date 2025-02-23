@@ -1,3 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 export const Recommendations = () => {
-  return <div>Recommendations</div>;
+  const navigate = useNavigate();
+  return (
+    <div>
+      Recommendations
+      <button onClick={() => navigate("/")}>Back</button>
+    </div>
+  );
 };
