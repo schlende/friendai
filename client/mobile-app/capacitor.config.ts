@@ -1,9 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: "com.friendai.app",
-  appName: "FriendAI",
-  webDir: "dist",
+  appId: 'com.example.app',
+  appName: '\x15friend-ai',
+  webDir: 'dist'
 };
 
 export default config;

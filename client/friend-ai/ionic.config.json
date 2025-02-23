@@ -1,7 +1,14 @@
 {
   "name": "FriendAI",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {
+      "ios": {
+        "bundleIdentifier": "com.friendai.app"
+      },
+      "android": {
+        "package": "com.friendai.app"
+      }
+    }
   },
   "type": "react-vite"
 }
