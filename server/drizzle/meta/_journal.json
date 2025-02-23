@@ -8,6 +8,13 @@
       "when": 1740297211859,
       "tag": "0000_bored_sleeper",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1740304631575,
+      "tag": "0001_icy_karnak",
+      "breakpoints": true
     }
   ]
 }

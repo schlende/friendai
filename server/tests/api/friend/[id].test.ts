@@ -10,6 +10,7 @@ test.describe('Friend Detail API', () => {
     const testUser = {
       username: 'frienddetailtest',
       fullName: 'Friend Detail Test User',
+      howwemet: 'At a dance class',
       email: 'frienddetail@example.com',
       password: 'testpassword123',
     };

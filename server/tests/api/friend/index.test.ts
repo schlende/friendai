@@ -10,6 +10,7 @@ test.describe('Friends List API', () => {
     const testUser = {
       username: 'friendtest',
       fullName: 'Friend Test User',
+      howwemet: 'At a dance class',
       email: 'friendtest@example.com',
       password: 'testpassword123',
     };
@@ -79,6 +80,7 @@ test.describe('Friends List API', () => {
 
     const newFriend = {
       name: 'Friend Test User',
+      howwemet: 'At a dance class',
       birthday: '1990-01-01T00:00:00.000Z',
       interests: 'Testing, Programming',
       priority: 'high'
@@ -98,6 +100,7 @@ test.describe('Friends List API', () => {
     const data = await response.json();
     expect(data.success).toBeTruthy();
     expect(data.friend).toBeDefined();
+    expect(data.friend.howwemet).toBe(newFriend.howwemet);
     expect(data.friend.interests).toBe(newFriend.interests);
     expect(data.friend.priority).toBe(newFriend.priority);
   });

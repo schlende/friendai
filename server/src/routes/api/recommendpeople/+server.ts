@@ -69,10 +69,11 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
       });
 
     return json({
-      friends: recommendedFriends.map(({ id, name, interests, matchReason }) => ({
+      friends: recommendedFriends.map(({ id, name, interests, howwemet, matchReason }) => ({
         id,
         name,
         interests,
+        howwemet,
         matchReason
       })),
       count: recommendedFriends.length

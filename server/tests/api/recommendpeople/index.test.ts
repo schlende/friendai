@@ -35,19 +35,22 @@ test.describe('Recommend People API', () => {
         name: 'Hiking Friend',
         birthday: '1990-01-01T00:00:00.000Z',
         interests: 'hiking, outdoor photography, nature',
-        priority: 'high' as const
+        priority: 'high' as const,
+        howwemet: 'Met at a hiking meetup'
       },
       {
         name: 'Coffee Friend',
         birthday: '1992-01-01T00:00:00.000Z',
         interests: 'coffee, cafes, reading',
-        priority: 'med' as const
+        priority: 'med' as const,
+        howwemet: 'Met at a local coffee shop'
       },
       {
         name: 'Other Friend',
         birthday: '1991-01-01T00:00:00.000Z',
         interests: 'gaming, movies',
-        priority: 'low' as const
+        priority: 'low' as const,
+        howwemet: 'Through mutual friends'
       }
     ];
 
@@ -81,6 +84,7 @@ test.describe('Recommend People API', () => {
 
     // First recommended friend should be the hiking friend
     expect(data.friends[0].name).toBe('Hiking Friend');
+    expect(data.friends[0].howwemet).toBe('Met at a hiking meetup');
     expect(data.friends[0].matchReason).toBeDefined();
   });
 
@@ -144,8 +148,13 @@ test.describe('Recommend People API', () => {
     expect(data.count).toBeGreaterThan(1);
     
     // Should include both hiking friend (photography) and coffee friend
-    const friendNames = data.friends.map((f: any) => f.name);
-    expect(friendNames).toContain('Hiking Friend');
-    expect(friendNames).toContain('Coffee Friend');
+    const friends = data.friends;
+    const hikingFriend = friends.find((f: any) => f.name === 'Hiking Friend');
+    const coffeeFriend = friends.find((f: any) => f.name === 'Coffee Friend');
+    
+    expect(hikingFriend).toBeDefined();
+    expect(hikingFriend.howwemet).toBe('Met at a hiking meetup');
+    expect(coffeeFriend).toBeDefined();
+    expect(coffeeFriend.howwemet).toBe('Met at a local coffee shop');
   });
 }); 

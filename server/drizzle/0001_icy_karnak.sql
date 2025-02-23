@@ -1,0 +1,1 @@
+ALTER TABLE "friends" ADD COLUMN "howwemet" text;

@@ -8,6 +8,7 @@ import { eq, sql } from 'drizzle-orm';
 // Validation schema for new friend
 const friendSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100),
+  howwemet: z.string().optional(),
   birthday: z.string().optional(),
   interests: z.string().optional(),
   priority: z.enum(['low', 'med', 'high']).default('med'),
@@ -58,6 +59,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     const newFriend = await db.insert(friends).values({
       name: validatedData.name,
       userId: user.id,
+      howwemet: validatedData.howwemet,
       birthday: validatedData.birthday ? new Date(validatedData.birthday) : null,
       interests: validatedData.interests,
       priority: validatedData.priority

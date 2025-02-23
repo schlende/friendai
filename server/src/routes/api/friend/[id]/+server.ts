@@ -8,6 +8,7 @@ import { eq, and } from 'drizzle-orm';
 // Validation schema for friend updates
 const friendUpdateSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100),
+  howwemet: z.string().optional(),
   birthday: z.string().optional(),
   interests: z.string().optional(),
   priority: z.enum(['low', 'med', 'high']).default('med'),

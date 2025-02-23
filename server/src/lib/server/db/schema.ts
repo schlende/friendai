@@ -34,6 +34,7 @@ export const friends = pgTable('friends', {
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
   name: varchar('name', { length: 100 }).notNull(),
+  howwemet: text(),
   birthday: timestamp('birthday'),
   interests: text('interests'),
   lastRecommended: timestamp('last_recommended'),

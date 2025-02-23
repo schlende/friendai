@@ -143,6 +143,7 @@ The Postgres database is structured around three main tables to manage users, fr
 - **id:** Primary key, sequential.
 - **user_id:** Foreign key linking to the Users table. Make this a reference type to users with onDelete cascade.
 - **name** Required - the name of the friend first and last
+- **howwemet** - a summary of how we met
 - **birthday:** Datetime field.
 - **interests:** Free-form text describing the friend's interests.
 - **lastrecommended:** Datetime marking the last time a recommendation was generated for this friend.
