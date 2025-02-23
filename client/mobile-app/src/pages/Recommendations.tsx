@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 import Card from "./components/Card";
 import "../styles/Card.css"; // Import the CSS file
 import { useNavigate, useParams } from "react-router-dom";
+import { Modal } from "./components/Modal";
 
 const Recommendations: React.FC = () => {
   const { id } = useParams();
+  const [selectedRecommendation, setSelectedRecommendation] = useState<
+    string | null
+  >(null);
   console.log("id", id);
   const navigate = useNavigate();
   const [recommendations, setRecommendations] = useState<
     {
+      id: number;
       title: string;
       date: string;
       description: string;
@@ -40,7 +45,8 @@ const Recommendations: React.FC = () => {
       ).find((rec) => rec.id === Number(id));
 
       const transformedRecommendations =
-        recommendationForFriend?.recommendations.map((rec) => ({
+        recommendationForFriend?.recommendations.map((rec, index) => ({
+          id: index,
           title: rec.idea,
           // a random time between 1 and 3 days from now
           date: new Date(
@@ -65,8 +71,8 @@ const Recommendations: React.FC = () => {
           title={rec.title}
           date={rec.date}
           description={rec.description}
-          onDoThis={rec.onDoThis}
-          onTweakThis={rec.onTweakThis}
+          onDoThis={() => setSelectedRecommendation(rec.id.toString())}
+          onTweakThis={() => setSelectedRecommendation(rec.title)}
         />
       ))}
       <button
@@ -75,6 +81,17 @@ const Recommendations: React.FC = () => {
       >
         Load More
       </button>
+      <Modal
+        isOpen={selectedRecommendation !== null}
+        onClose={() => setSelectedRecommendation(null)}
+      >
+        <div>
+          <h1 style={{ color: "black" }}>Modal</h1>
+          <p style={{ color: "black" }}>
+            Currently selected recommendation: {selectedRecommendation}
+          </p>
+        </div>
+      </Modal>
     </div>
   );
 };
