@@ -1,6 +1,33 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
+const dummyIntroCall = `Good morning Dave! Here are a few ways to deepen your connections today:
+Send Alex a quick message—you haven’t caught up in months. A simple “Hey, how’s life? Miss our chats!” can go a long way.
+Check in on Sarah’s job search—she mentioned it last time, and a “How’s the hunt going? Anything I can do to help?” shows you care.
+Shoot James a LinkedIn message—he recently started a new role. Congratulate him and ask how it’s going!
+Text your cousin Emma—she just had a baby. A thoughtful “Hope you’re hanging in there! Let me know if you need anything.” will mean a lot.
+Plan a call with Mom or Dad—even just 10 minutes to ask about their week can make their day.
+Drop a compliment in a group chat—something as small as “Chris, that playlist you made is awesome!” sparks good vibes.
+React to an old friend’s social post—commenting on Lisa’s travel photos with “Looks amazing! Where was your favorite spot?” can revive a conversation.
+Thank Mark for his advice last month—“By the way, your suggestion really helped—I appreciate it!” keeps relationships strong.
+Set a reminder to plan dinner with Jessica—even if it’s next week, locking it in keeps friendships alive.
+Tell your spouse one thing you love about them today—just a simple “I really appreciate how supportive you are.”
+Who’s first on your list today?`;
 
 export const VoiceSummary = () => {
+  useEffect(() => {
+    const speak = () => {
+      const utterance = new SpeechSynthesisUtterance(dummyIntroCall);
+      utterance.voice = speechSynthesis.getVoices()[1]; // Choose a voice
+      speechSynthesis.speak(utterance);
+    };
+
+    speak();
+    return () => {
+      speechSynthesis.cancel();
+    };
+  }, []);
+
   const navigate = useNavigate();
   return (
     <div>
