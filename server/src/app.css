@@ -1,3 +1,15 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities'
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-cnyred: #C13341;
+  --color-cnyred-dark: #7A2128;
+  --color-cnyred-light: #A82D38;
+  --color-cnyyellow: #D1B967;
+  --color-neutral: #F1EFE9;
+  
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Montserrat', sans-serif;
+}
