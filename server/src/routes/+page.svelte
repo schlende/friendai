@@ -178,9 +178,10 @@
         <div class="container px-6 mx-auto">
             <div transition:fly={{ x: -200, duration: 600 }} class="max-w-3xl mx-auto text-center">
                 <h2 class="mb-6 text-3xl font-bold text-gray-900">Our Story</h2>
-                <p class="text-lg text-gray-600">
+                <p class="text-lg text-gray-600 mb-8">
                     Our team of expats in Kaohsiung understands the challenges of forming new bonds when you're settling in a new place. That's what inspired Friend AI.
                 </p>
+                <img src="/friends-in-kaohsiung-2.png" class="w-full h-auto object-contain rounded-lg mt-12 mb-8" alt="Friends in Kaohsiung"/>
             </div>
         </div>
     </section>
