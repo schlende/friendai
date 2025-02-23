@@ -95,6 +95,32 @@
     - For `PUT/DELETE`: JSON confirmation message.
   - **Notes:** Maintain a consistent response structure for both GET and POST methods.
 
+- **Recommend People Endpoint:**
+  - **URL:** `/api/recommendpeople`
+  - **Method:** `POST`
+  - **Payload:** 
+    ```json
+    {
+      "text": "string"    // Free-form text describing the activity, e.g. "I'm going hiking this afternoon"
+    }
+    ```
+  - **Response:**
+    ```json
+    {
+      "friends": [{
+        "id": "number",
+        "name": "string",
+        "interests": "string",
+        "matchReason": "string" // Why this friend was recommended
+      }],
+      "count": "number"
+    }
+    ```
+  - **Notes:** 
+    - Uses friend interests and priorities to suggest relevant people
+    - Analyzes free-form text to extract activity type and context
+    - Returns friends sorted by relevance to the activity
+
 ---
 
 ## 4. Database Schema

@@ -10,7 +10,7 @@ const devconfig: PlaywrightTestConfig = {
 
 	timeout: 5000,
 	testDir: 'tests',
-	testMatch: ['**/*.test.ts'],
+	testMatch: /(.+\.)?(test|spec)\.[jt]s/
 };
 
 
